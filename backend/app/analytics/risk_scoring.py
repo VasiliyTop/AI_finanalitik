@@ -79,9 +79,9 @@ class RiskScorer:
         
         # Calculate days of cash
         if avg_outflow > 0:
-            days_of_cash = float(current_balance / avg_outflow)
+            days_of_cash = float(Decimal(str(current_balance)) / Decimal(str(avg_outflow)))
         else:
-            days_of_cash = 999
+            days_of_cash = 999.0
         
         # Calculate probability of gap (simplified)
         # Check forecast for next 30 days

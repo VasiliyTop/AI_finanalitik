@@ -4,7 +4,8 @@ import requests
 import plotly.graph_objects as go
 from datetime import date
 
-API_BASE_URL = "http://localhost:8000/api"
+import os
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
 
 
 class Forecast:

@@ -102,6 +102,8 @@ class MetricsCalculator:
             return []
         
         df = pd.DataFrame(df_data)
+        df["date"] = pd.to_datetime(df["date"])
+        df["period"] = df["date"] # Ensure period column exists for grouping
         
         # Group by period
         if period == "daily":
@@ -165,15 +167,16 @@ class MetricsCalculator:
         results = query.order_by(func.abs(func.sum(FactCashflow.amount_rur)).desc()).limit(top_n).all()
         
         # Calculate total for percentage
-        total = sum(abs(float(r.total_amount)) for r in results)
+        total = sum(abs(Decimal(str(r.total_amount))) for r in results)
         
         structure = []
         for cat_id, cat_name, is_income, amount in results:
+            amount_dec = Decimal(str(amount))
             structure.append({
                 "category_id": cat_id,
                 "category_name": cat_name,
-                "amount": amount,
-                "percentage": float(abs(amount) / total * 100) if total > 0 else 0,
+                "amount": amount_dec,
+                "percentage": float(abs(amount_dec) / total * 100) if total > 0 else 0,
                 "is_income": is_income
             })
         

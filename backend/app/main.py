@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 # Include routers
-from app.api.routes.import import router as import_router
+from app.api.routes.data_import import router as import_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.forecast import router as forecast_router
 from app.api.routes.recommendations import router as recommendations_router
